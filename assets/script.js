@@ -1,24 +1,28 @@
 document.documentElement.classList.add('motion-ready');
 
-const page = location.pathname.split('/').pop() || 'index.html';
-const activePage = page === '' ? 'index.html' : page;
+if (location.pathname.endsWith('/index.html')) {
+  history.replaceState(null, '', location.pathname.slice(0, -'index.html'.length) + location.search + location.hash);
+}
+
+const lastSegment = location.pathname.split('/').filter(Boolean).pop() || '';
+const activePage = ['about', 'supplies', 'process', 'contact'].includes(lastSegment) ? lastSegment : 'home';
 const header = document.querySelector('.site-header');
 
 if (header) {
   const links = [
-    ['index.html', 'Home'],
-    ['about.html', 'Company'],
-    ['supplies.html', 'Pest services'],
-    ['process.html', 'Our standards'],
-    ['contact.html', 'Contact']
+    ['./', 'Home', 'home'],
+    ['about/', 'Company', 'about'],
+    ['supplies/', 'Pest services', 'supplies'],
+    ['process/', 'Our standards', 'process'],
+    ['contact/', 'Contact', 'contact']
   ];
-  const navLinks = links.map(([href, label]) =>
-    '<a' + (activePage === href ? ' class="active"' : '') +
+  const navLinks = links.map(([href, label, route]) =>
+    '<a' + (activePage === route ? ' class="active"' : '') +
     ' href="' + href + '">' + label + '</a>'
   ).join('');
   header.innerHTML =
     '<div class="container header-inner">' +
-      '<a class="brand" href="index.html" aria-label="Debug Services home">' +
+      '<a class="brand" href="./" aria-label="Debug Services home">' +
         '<span class="brand-mark">D</span>' +
         '<span class="brand-copy">Debug Services<small>Pest management · Kampala</small></span>' +
       '</a>' +
@@ -74,7 +78,7 @@ if (form) {
       event.preventDefault();
       form.elements.category.value = link.dataset.pestSelect;
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', '#quote-form');
+      history.replaceState(null, '', location.pathname + location.search + '#quote-form');
     });
   });
   form.addEventListener('submit', event => {
