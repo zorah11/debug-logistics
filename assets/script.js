@@ -1,3 +1,5 @@
+document.documentElement.classList.add('motion-ready');
+
 const page = location.pathname.split('/').pop() || 'index.html';
 const activePage = page === '' ? 'index.html' : page;
 const header = document.querySelector('.site-header');
@@ -45,15 +47,20 @@ document.querySelectorAll('[data-year]').forEach(el => {
   el.textContent = new Date().getFullYear();
 });
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: .08, rootMargin: '0px 0px 40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+} else {
+  reveals.forEach(el => el.classList.add('visible'));
+}
 
 const form = document.querySelector('#quote-form');
 if (form) {

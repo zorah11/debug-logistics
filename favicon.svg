@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#0a2215"/><path fill="#19b765" d="M15 14h18c12 0 20 7 20 18s-8 18-20 18H15zm12 10v16h6c5 0 8-3 8-8s-3-8-8-8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Debug Services pest shield">
+  <path fill="#27c96f" d="M6 4h52v39L43 60H6z"/>
+  <g fill="none" stroke="#07130c" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="3.5" d="M26 23c-2-4-4-6-8-7m20 7c2-4 4-6 8-7M23 30l-9-5m9 10-10 1m11 5-9 6m26-17 9-5m-9 10 10 1m-11 5 9 6"/>
+    <path stroke-width="3" d="M32 24v22"/>
+  </g>
+  <ellipse cx="32" cy="35" rx="10" ry="13" fill="#07130c"/>
+  <circle cx="32" cy="20" r="6" fill="#07130c"/>
+  <path d="M32 25v21" stroke="#27c96f" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
