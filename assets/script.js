@@ -31,16 +31,21 @@ if (header) {
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 if (toggle && nav) {
-  toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
+  const setMenuOpen = open => {
+    nav.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', open);
+    toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
     toggle.textContent = open ? 'Close' : 'Menu';
     document.body.classList.toggle('menu-open', open);
+  };
+  toggle.addEventListener('click', () => setMenuOpen(!nav.classList.contains('open')));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenuOpen(false)));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && nav.classList.contains('open')) {
+      setMenuOpen(false);
+      toggle.focus();
+    }
   });
-  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    document.body.classList.remove('menu-open');
-  }));
 }
 
 document.querySelectorAll('[data-year]').forEach(el => {
@@ -64,17 +69,25 @@ if ('IntersectionObserver' in window) {
 
 const form = document.querySelector('#quote-form');
 if (form) {
+  document.querySelectorAll('[data-pest-select]').forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      form.elements.category.value = link.dataset.pestSelect;
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#quote-form');
+    });
+  });
   form.addEventListener('submit', event => {
     event.preventDefault();
     const data = new FormData(form);
     const subject = encodeURIComponent('Pest-control request from ' + data.get('name'));
     const body = encodeURIComponent(
-      'Name: ' + data.get('name') + '\\n' +
-      'Property address / city: ' + (data.get('organisation') || 'Not provided') + '\\n' +
-      'Phone: ' + data.get('phone') + '\\n' +
-      'Email: ' + data.get('email') + '\\n' +
-      'Service type: ' + data.get('category') + '\\n\\n' +
-      'Pest issue / details:\\n' + data.get('requirements')
+      'Name: ' + data.get('name') + '\n' +
+      'Property address / area: ' + (data.get('organisation') || 'Not provided') + '\n' +
+      'Phone: ' + data.get('phone') + '\n' +
+      'Email: ' + data.get('email') + '\n' +
+      'Pest issue: ' + data.get('category') + '\n\n' +
+      'Where seen / details:\n' + data.get('requirements')
     );
     const status = form.querySelector('.form-status');
     status.textContent = 'Opening your email application…';
