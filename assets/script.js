@@ -5,15 +5,16 @@ if (location.pathname.endsWith('/index.html')) {
 }
 
 const lastSegment = location.pathname.split('/').filter(Boolean).pop() || '';
-const activePage = ['about', 'supplies', 'process', 'contact'].includes(lastSegment) ? lastSegment : 'home';
+const activePage = ['about', 'supplies', 'pest-control', 'process', 'contact'].includes(lastSegment) ? lastSegment : 'home';
 const header = document.querySelector('.site-header');
 
 if (header) {
   const links = [
     ['./', 'Home', 'home'],
     ['about/', 'Company', 'about'],
-    ['supplies/', 'Pest services', 'supplies'],
-    ['process/', 'Our standards', 'process'],
+    ['supplies/', 'Supplies', 'supplies'],
+    ['pest-control/', 'Pest control', 'pest-control'],
+    ['process/', 'Commitments', 'process'],
     ['contact/', 'Contact', 'contact']
   ];
   const navLinks = links.map(([href, label, route]) =>
@@ -22,9 +23,9 @@ if (header) {
   ).join('');
   header.innerHTML =
     '<div class="container header-inner">' +
-      '<a class="brand" href="./" aria-label="Debug Services home">' +
+      '<a class="brand" href="./" aria-label="Debug Logistics Limited home">' +
         '<span class="brand-mark">D</span>' +
-        '<span class="brand-copy">Debug Services<small>Pest management · Kampala</small></span>' +
+        '<span class="brand-copy">Debug Logistics<small>Supplies · Pest control</small></span>' +
       '</a>' +
       '<button class="menu-toggle" aria-expanded="false" aria-label="Open navigation">Menu</button>' +
       '<nav class="nav" aria-label="Main navigation">' + navLinks + '</nav>' +
@@ -73,10 +74,19 @@ if ('IntersectionObserver' in window) {
 
 const form = document.querySelector('#quote-form');
 if (form) {
-  document.querySelectorAll('[data-pest-select]').forEach(link => {
+  const enquiryMap = {
+    supplies: 'Supplies quotation',
+    'pest-control': 'Pest-control booking',
+    compliance: 'Compliance pack'
+  };
+  const requestedEnquiry = new URLSearchParams(location.search).get('enquiry');
+  if (requestedEnquiry && enquiryMap[requestedEnquiry]) {
+    form.elements.category.value = enquiryMap[requestedEnquiry];
+  }
+  document.querySelectorAll('[data-pest-select], [data-enquiry-select]').forEach(link => {
     link.addEventListener('click', event => {
       event.preventDefault();
-      form.elements.category.value = link.dataset.pestSelect;
+      form.elements.category.value = link.dataset.pestSelect || link.dataset.enquirySelect;
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
       history.replaceState(null, '', location.pathname + location.search + '#quote-form');
     });
@@ -84,14 +94,15 @@ if (form) {
   form.addEventListener('submit', event => {
     event.preventDefault();
     const data = new FormData(form);
-    const subject = encodeURIComponent('Pest-control request from ' + data.get('name'));
+    const enquiryType = data.get('category') || 'General enquiry';
+    const subject = encodeURIComponent(enquiryType + ' from ' + data.get('name'));
     const body = encodeURIComponent(
       'Name: ' + data.get('name') + '\n' +
-      'Property address / area: ' + (data.get('organisation') || 'Not provided') + '\n' +
+      'Organisation / address: ' + (data.get('organisation') || 'Not provided') + '\n' +
       'Phone: ' + data.get('phone') + '\n' +
       'Email: ' + data.get('email') + '\n' +
-      'Pest issue: ' + data.get('category') + '\n\n' +
-      'Where seen / details:\n' + data.get('requirements')
+      'Enquiry type: ' + enquiryType + '\n\n' +
+      'Requirements / details:\n' + data.get('requirements')
     );
     const status = form.querySelector('.form-status');
     status.textContent = 'Opening your email application…';

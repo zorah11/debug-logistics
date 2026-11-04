@@ -313,3 +313,37 @@ html.motion-ready .reveal.visible{opacity:1;transform:none}
   .contact-grid{gap:50px}
   .contact-copy h2{margin:16px 0}
 }
+
+/* Content expansion: the original visual system, extended to both service lines. */
+.supply-catalogue{padding:0 0 120px;background:var(--paper)}
+.category h3{margin:16px 0;font-size:clamp(1.45rem,2vw,2rem)}
+.category p{max-width:520px;color:#566159}
+.light-list{margin-top:30px;color:#c4cec7}
+.light-list li{border-color:#39423c}
+.five-values{grid-template-columns:repeat(5,1fr)}
+.five-values article,.five-values article+article{padding:32px 22px;border-left:1px solid #d1d9d1}
+.five-values article:first-child{border-left:0}
+.guarantee-note{margin-top:28px;padding:22px 0;border-top:1px solid #39423c;color:#c4cec7}
+.commitment-list{grid-template-columns:repeat(5,1fr)}
+.commitment-list article{padding-right:24px}
+.enquiry-options img{object-fit:cover;border-radius:2px}
+@media(min-width:981px) and (max-width:1180px){.site-header .header-inner{gap:20px}.site-header .nav{gap:16px}.nav a{font-size:.7rem}.brand-copy{font-size:.9rem}.header-call{padding-left:16px}}
+@media(max-width:980px){.five-values,.commitment-list{grid-template-columns:1fr 1fr}.five-values article,.five-values article+article{border-bottom:1px solid #d1d9d1}.supply-catalogue{padding-bottom:80px}}
+@media(max-width:580px){
+  body{width:100%;max-width:100%;overflow-x:hidden}
+  .site-header .header-inner{width:100%;padding-inline:16px;grid-template-columns:minmax(0,1fr) auto}
+  .site-header .brand{min-width:0}
+  .menu-toggle{display:block!important;position:absolute;right:16px;top:14px;justify-self:end}
+  .hero{padding-inline:14px}
+  .hero-block{width:100%;min-width:0;max-width:100%;padding:20px}
+  .hero h1{font-size:2.25rem}
+  .hero h1,.hero-block p,.dispatch-grid h2,.dispatch-grid p,.about-hero h1,.about-hero p,.method-hero h1,.method-hero p{max-width:100%;overflow-wrap:break-word}
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  h2{font-size:1.9rem}
+  .about-hero h1,.method-hero h1{font-size:2.25rem}
+  .about-hero-grid>*,.method-hero-grid>*{min-width:0;max-width:100%}
+  .five-values,.commitment-list{grid-template-columns:1fr}
+  .five-values article,.five-values article+article{padding:24px 0;border-left:0}
+  .supply-catalogue{padding-bottom:60px}
+  .contact-hero-grid>img{object-fit:cover}
+}

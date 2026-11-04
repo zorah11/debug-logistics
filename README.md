@@ -1,13 +1,14 @@
-# Debug Services
+# Debug Logistics Limited
 
-Responsive static website for Debug Services, the Kampala pest-management brand of Debug Logistics Inc.
+Responsive static website for Debug Logistics Limited, covering supplies, procurement and its Debug Services pest-control arm in Kampala.
 
 ## Pages
 
 - Home
 - Company
-- Pest services
-- Our standards
-- Contact / inspection enquiry
+- Supplies & procurement
+- Pest control
+- Commitments
+- Contact / enquiry
 
-The site uses plain HTML, CSS and JavaScript and is published with GitHub Pages. Pest artwork and the inspection photograph are original generated assets; the logo is a site-native SVG.
+The site uses plain HTML, CSS and JavaScript and is published with GitHub Pages. All photography and pest artwork is stored locally; the logo is a site-native SVG.
